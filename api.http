@@ -1,0 +1,33 @@
+//HECHO
+### Recuperar usuario por id
+GET http://localhost:8080/users/id/72718b5b-dc17-11ef-ac31-74d4358ffc73
+
+//HECHO
+### Recuperar usuario por tipo
+GET http://localhost:8080/users/role/user
+
+
+//HECHO
+### Crear un user 
+POST http://localhost:8080/users HTTP/1.1
+content-type: application/json
+
+{
+  "sql": "SELECT * FROM users WHERE username",
+  "username": "pepe1",
+  "email": "pepe1@gmail.com",
+  "password": "123456761",
+  "role": "user"
+}
+
+//HECHO
+### Borrar uN USER
+DELETE http://localhost:8080/users/6db211fa-dc93-11ef91c1-74d4358ffc73
+
+### Actualizar un user
+PATCH http://localhost:8080/users/72718b5b-dc17-11ef-ac31-74d4358ffc73
+Content-Type: application/json
+
+{
+  "email": "alice@example.com"
+}
