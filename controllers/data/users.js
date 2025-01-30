@@ -6,10 +6,9 @@ export class UserController {
   }
 
   getByRole = async (req, res) =>{
-    console.log(req.params)
     const { role } = req.params
     const users = await this.userModel.getByRole({ role })
-    console.log(users)
+
     if(!users) return res.status(404).json({ message: 'Users not found' })
     res.json(users)
   }
@@ -22,27 +21,7 @@ export class UserController {
     res.status(404).json({ message: 'User not found' })
   }
 
-  create = async (req, res) => {
-    console.log("create");
-    console.log("Body received in create:", req.body)
-    const result = validateUser(req.body)
-
-    console.log(result);
-    if (!result.success) {
-    // 422 Unprocessable Entity
-      return res.status(400).json({ error: JSON.parse(result.error.message) })
-    }
-
-    const newUser = await this.userModel.create({ input: result.data })
-
-    if (!newUser) {
-      // 422 Unprocessable Entity
-        return res.status(400).json({ error: JSON.parse(result.error.message) })
-      }
-    res.status(201).json(newUser)
-  }
-
-    delete = async (req, res) => {
+  delete = async (req, res) => {
     const { id } = req.params
 
     const result = await this.userModel.delete({ id })

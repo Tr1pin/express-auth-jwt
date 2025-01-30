@@ -4,10 +4,11 @@ import { corsMiddleware } from './middlewares/cors.js'
 import jwtMiddleware from './middlewares/jwt.js';
 import { userRouter } from './routes/users.js'
 import { UserModel } from './models/mysql/users.js'
+import { AuthModel } from './models/auth/authModel.js'; 
 
 import { DEFAULT_PORT } from './config.js';
 
-export const createApp = ({ userModel }) => {
+export const createApp = ({ userModel }, { authModel }) => {
   const app = express();
 
   //app.set('view engine', 'ejs');
@@ -21,6 +22,7 @@ export const createApp = ({ userModel }) => {
   
 
   app.use('/users', userRouter({ userModel }))
+  app.use('/', userRouter({ authModel}))
 
 
   const PORT = process.env.PORT ?? DEFAULT_PORT;
@@ -32,4 +34,4 @@ export const createApp = ({ userModel }) => {
   return app;
 };
 
-createApp({ userModel: UserModel }); 
+createApp({ userModel: UserModel }, { authModel: AuthModel }); 

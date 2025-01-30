@@ -3,20 +3,25 @@ import { DEFAULT_CONFIG_MySQL, SALT_ROUNDS } from '../../config.js'
 import bcrypt from 'bcryptjs'
 
 const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG_MySQL
-
-const connection = await mysql.createConnection(connectionString)
+const connection = await mysql.createConnection(connectionString)  
 
 export class UserModel {
-  
-    static async getByRole ({ role }) {
 
-        if (role) {
-            const lowerCaseRole = role.toLowerCase()
+    static async connect () {
+      const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG_MySQL
+      const connection = await mysql.createConnection(connectionString)  
+
+      return connection
+    }
+    
+    static async getUserByEmail ({ email }) {
+
+        if (email) {
             
             try{
               const users = await connection.query(
-                `SELECT BIN_TO_UUID(id) id, username FROM users WHERE LOWER(role) = ?;`,
-                [lowerCaseRole]
+                `SELECT BIN_TO_UUID(id) id, username FROM users WHERE email = ?;`,
+                [email]
               )
 
               if (users[0].length === 0) return []
