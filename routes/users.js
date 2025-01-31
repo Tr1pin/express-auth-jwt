@@ -21,6 +21,7 @@ export const userRouter = ({ userModel, authModel }) => {
   router.post('/register', userAuthController.register)
   router.get('/logout', userAuthController.logout)
   router.get('/protected', userAuthController.protected)
+  router.get('/', userAuthController.home)
 
   return router; // Retorna el router configurado
 };

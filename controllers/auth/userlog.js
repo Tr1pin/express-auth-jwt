@@ -57,4 +57,8 @@ export class UserAuthController extends UserModel {
         res.render('protected', user)
     }
 
+    home = () => {
+        res.render('index')
+    }
+
 }
