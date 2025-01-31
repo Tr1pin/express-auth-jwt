@@ -1,5 +1,8 @@
 import { UserModel } from '../../models/mysql/users.js'
 import { validateUser } from '../../schemas/users.js'
+import jwt from 'jsonwebtoken'
+import { SECRET_KEY } from '../../config.js'
+
 
 export class UserAuthController {
     constructor({ authModel }) {
@@ -7,11 +10,14 @@ export class UserAuthController {
     }
 
     login = async (req, res) => { 
+        console.log(req.body);
+        console.log("login");
         const { email, password } = req.body
         try {
             const user = await this.authModel.login({ email, password })
+            console.log( user);
             const token = jwt.sign(
-                { id: user.id, username: user.username },
+                { id: user.id, email: user.email },
                 SECRET_KEY,
                 { expiresIn: '1h' }
             );
@@ -20,7 +26,7 @@ export class UserAuthController {
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
                 maxAge: 3600000,
-            }).send({ user, token });
+            }).send({ user, token }).status(200);
         } catch (error) {
             res.status(400).send(error.message)
         }
@@ -28,8 +34,6 @@ export class UserAuthController {
     }
 
     register = async (req, res) => {
-         console.log("create");
-            console.log("Body received in create:", req.body)
             const result = validateUser(req.body)
         
             console.log(result);

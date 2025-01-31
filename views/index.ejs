@@ -88,8 +88,8 @@
                     <div class="form-container">
                         <form id="login-form">
                             <h2>Login</h2>
-                            <label for="login-username">Username</label>
-                            <input type="text" id="login-username" name="username" required>
+                            <label for="login-email">Email</label>
+                            <input type="text" id="login-email" name="email" required>
 
                             <label for="login-password">Password</label>
                             <input type="password" id="login-password" name="password" required>
@@ -135,7 +135,7 @@
         loginForm?.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            const username = $('#login-username').value;
+            const email = $('#login-email').value;
             const password = $('#login-password').value;
 
             fetch('/login', {
@@ -143,7 +143,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email, password })
             })
 
                 .then(res => {

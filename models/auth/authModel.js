@@ -1,18 +1,13 @@
 import { UserModel } from "../mysql/users.js";
 import bcrypt from 'bcryptjs'
 
-export class AuthModel extends UserModel {
-    constructor ({ userModel }) {
-        this.userModel = userModel
-    }
-
+export class AuthModel {
     static async login ({ email, password }) {
         if (email) {
-            try{
-                const users = await this.userModel.getUserByEmail({ email })
-            }catch(e){
-                return 'User not found'
-            }
+           
+            const users = await UserModel.getUserByEmail({ email })
+            console.log(users);
+            if(!users) return 'User not found'
 
             try {
                 const user = users[0]

@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { DEFAULT_CONFIG_MySQL, SALT_ROUNDS } from '../../config.js'
 import bcrypt from 'bcryptjs'
+import e from 'express'
 
 const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG_MySQL
 const connection = await mysql.createConnection(connectionString)  
@@ -15,15 +16,17 @@ export class UserModel {
     }
     
     static async getUserByEmail ({ email }) {
-
+      console.log(email);
+      console.log("getUserByEmail");
         if (email) {
             
             try{
               const users = await connection.query(
-                `SELECT BIN_TO_UUID(id) id, username FROM users WHERE email = ?;`,
+                `SELECT BIN_TO_UUID(id) id, email, password FROM users WHERE email = ?;`,
                 [email]
               )
 
+              console.log(users);
               if (users[0].length === 0) return []
         
               return users[0]
@@ -32,6 +35,8 @@ export class UserModel {
               return 'Error connection' 
             }
 
+        }else{
+          return 'Email is required'
         }
     }
 
