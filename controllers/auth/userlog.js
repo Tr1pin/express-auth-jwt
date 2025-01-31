@@ -1,12 +1,9 @@
-import { UserModel } from './models/mysql/users.js'
+import { UserModel } from '../../models/mysql/users.js'
 
 export class UserAuthController extends UserModel {
-    constructor ({ authModel }) {
-        this.authModel = authModel
-    }
-
-    constructor ({ userModel }) {
-        this.userModel = userModel
+    constructor({ authModel, userModel }) {
+        super(userModel);
+        this.authModel = authModel;
     }
 
     login = async (req, res) => { 

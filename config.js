@@ -6,7 +6,7 @@ export const {
     host: 'localhost',
     user: 'root',
     port: 3306,
-    password: '',
+    password: 'Denis.,214',
     database: 'db'
   }
 } = process.env

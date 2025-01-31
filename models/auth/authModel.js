@@ -1,4 +1,4 @@
-import { UserModel } from "../mysql/users";
+import { UserModel } from "../mysql/users.js";
 import bcrypt from 'bcryptjs'
 
 export class AuthModel extends UserModel {
@@ -7,7 +7,6 @@ export class AuthModel extends UserModel {
     }
 
     static async login ({ email, password }) {
-        const connection = await this.userModel.connect()
         if (email) {
             try{
                 const users = await this.userModel.getUserByEmail({ email })
@@ -24,8 +23,6 @@ export class AuthModel extends UserModel {
             } catch (error) {
                 return 'Password incorrect'
             }
-            
-            
             
         }
     }

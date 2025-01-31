@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { UserController } from '../controllers/data/users.js'
 import { UserAuthController } from '../controllers/auth/userlog.js'
 
-export const userRouter = ({ userModel }, { authModel }) => {
+export const userRouter = ({ userModel, authModel }) => {
   const router = Router(); // Crea una instancia de Router
 
   const userController = new UserController({ userModel })
