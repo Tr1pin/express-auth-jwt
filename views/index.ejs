@@ -104,6 +104,9 @@
                             <h2>Register</h2>
                             <label for="register-username">Username</label>
                             <input type="text" id="register-username" name="username" required>
+                            
+                            <label for="register-email">Email</label>
+                            <input type="text" id="register-email" name="email" required>
 
                             <label for="register-password">Password</label>
                             <input type="password" id="register-password" name="password" required>
@@ -162,6 +165,7 @@
         registerForm?.addEventListener('submit', e => {
             e.preventDefault();
             const username = $('#register-username').value;
+            const email = $('#register-email').value;
             const password = $('#register-password').value;
             const confirmPassword = $('#register-confirm-password').value;
 
@@ -174,12 +178,12 @@
             registerSpan.innerText = 'Registering...';
             registerSpan.style.color = 'blue';
 
-            fetch('/register', {
+            fetch('http://localhost:8080/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, email, password }),
             })
                 .then(res => res.json().then(data => ({ status: res.status, body: data })))
                 .then(({ status, body }) => {

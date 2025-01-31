@@ -52,8 +52,7 @@ export class UserModel {
         const {
             username,
             email,
-            password,
-            role
+            password
         } = input
     
         // todo: crear la conexión de genre
@@ -63,7 +62,8 @@ export class UserModel {
         const [{ uuid }] = uuidResult
 
         const passwordHash = await bcrypt.hash(password, SALT_ROUNDS)
-    
+        
+        const role = 'user'
         try {
           await connection.query(
             `INSERT INTO users (id, username, email, password, role)

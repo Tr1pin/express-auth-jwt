@@ -1,8 +1,8 @@
 import { UserModel } from '../../models/mysql/users.js'
+import { validateUser } from '../../schemas/users.js'
 
-export class UserAuthController extends UserModel {
-    constructor({ authModel, userModel }) {
-        super(userModel);
+export class UserAuthController {
+    constructor({ authModel }) {
         this.authModel = authModel;
     }
 
@@ -37,8 +37,8 @@ export class UserAuthController extends UserModel {
             // 422 Unprocessable Entity
               return res.status(400).json({ error: JSON.parse(result.error.message) })
             }
-        
-            const newUser = await this.userModel.create({ input: result.data })
+  
+            const newUser = await UserModel.create({ input: result.data })
         
             if (!newUser) {
               // 422 Unprocessable Entity
@@ -57,7 +57,7 @@ export class UserAuthController extends UserModel {
         res.render('protected', user)
     }
 
-    home = () => {
+    home = (req, res) => {
         res.render('index')
     }
 

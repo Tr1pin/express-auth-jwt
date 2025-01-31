@@ -7,8 +7,7 @@ const userSchema = z.object({
     email: z.string().email({ message: 'Invalid email address' })
         .min(5),
     password: z.string({ message: 'Password must be a string' })
-        .min(6, { message: 'Password must be at least 6 characters long' }),
-    role: z.enum(['user', 'admin'], { message: 'Role must be either "user" or "admin"' }),
+        .min(6, { message: 'Password must be at least 6 characters long' })
 });
 
 // Function to validate a complete user object.

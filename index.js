@@ -11,11 +11,11 @@ import { DEFAULT_PORT } from './config.js';
 export const createApp = ({ userModel }, { authModel }) => {
   const app = express();
 
-  //app.set('view engine', 'ejs');
-  //app.disable('x-powered-by')
+  app.set('view engine', 'ejs');
+  app.disable('x-powered-by')
 
-  //app.use(cookieParser());
-  //app.use(jwtMiddleware);
+  app.use(cookieParser());
+  app.use(jwtMiddleware);
   app.use(corsMiddleware());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
