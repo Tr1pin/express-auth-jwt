@@ -29,6 +29,6 @@ Este es un proyecto de autenticación de usuarios en Node.js utilizando Express 
 
    pnpm run dev
 
-##Pruebas 
+## Pruebas 
 Puedes realizar pruebas con el archivo api.http, instalando la extensión REST CLIENT.
    
