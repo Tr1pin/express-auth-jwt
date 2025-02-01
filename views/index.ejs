@@ -76,15 +76,15 @@
 
 <body>
     <div class="container">
-        <% if (typeof username !=='undefined' ) { %>
+        <% if (typeof email !=='undefined' ) { %>
             <div class="form-container">
-                <h2>Hola <%= username %>!</h2>
+                <h2>Hola <%= email %>!</h2>
                 <p>Estan en el panel de administración</p>
                 <button id="close-session">Cerrar sesión</button>
             </div>
             <% } %>
 
-                <% if (typeof username==='undefined' ) { %>
+                <% if (typeof email==='undefined' ) { %>
                     <div class="form-container">
                         <form id="login-form">
                             <h2>Login</h2>

@@ -57,18 +57,18 @@ export class UserAuthController {
 
     logout = async (req, res) => {
         res.clearCookie('access_token')
+        res.redirect('/')
     }
     
     protected = (req, res) => {
         const { user } = req.session;
-        console.log("Protected")
-        console.log(user)
         if (!user) return res.status(403).send('Access not authorized')
         res.render('protected', user)
     }
 
     home = (req, res) => {
-        res.render('index')
+        const { user } = req.session;
+        res.render('index', user)
     }
 
 }

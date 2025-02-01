@@ -19,7 +19,7 @@ export const userRouter = ({ userModel, authModel }) => {
   //Auth
   router.post('/login', userAuthController.login)
   router.post('/register', userAuthController.register)
-  router.get('/logout', userAuthController.logout)
+  router.post('/logout', userAuthController.logout)
   router.get('/protected', userAuthController.protected)
   router.get('/', userAuthController.home)
 
