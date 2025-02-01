@@ -1,13 +1,12 @@
 import mysql from 'mysql2/promise'
 import { DEFAULT_CONFIG_MySQL, SALT_ROUNDS } from '../../config.js'
 import bcrypt from 'bcryptjs'
-import e from 'express'
+
 
 const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG_MySQL
 const connection = await mysql.createConnection(connectionString)  
 
 export class UserModel {
-
     static async connect () {
       const connectionString = process.env.DATABASE_URL ?? DEFAULT_CONFIG_MySQL
       const connection = await mysql.createConnection(connectionString)  
@@ -16,8 +15,6 @@ export class UserModel {
     }
     
     static async getUserByEmail ({ email }) {
-      console.log(email);
-      console.log("getUserByEmail");
         if (email) {
             
             try{
@@ -32,25 +29,33 @@ export class UserModel {
               return users[0]
 
             }catch(e){
-              return 'Error connection' 
+              throw new Error('The user does not exist')
             }
 
         }else{
-          return 'Email is required'
+          throw new Error('Email is required')
         }
     }
 
     static async getById ({ id }) {
- 
-        const [user] = await connection.query(
-          `SELECT *, BIN_TO_UUID(id) id
-            FROM users WHERE id = UUID_TO_BIN(?);`,
-          [id]
-        )
-    
-        if (user[0].length === 0 || user[0] === null) return null
-    
-        return user[0];
+
+      if(!id){
+        try {
+          const [user] = await connection.query(
+            `SELECT *, BIN_TO_UUID(id) id
+              FROM users WHERE id = UUID_TO_BIN(?);`,
+            [id]
+          )
+      
+          if (user[0].length === 0 || user[0] === null) throw new Error('User not found')
+      
+          return user[0];
+        } catch (error) {
+          throw new Error('Error getting user')
+        }
+      }else{
+        throw new Error('Id is required')
+      }
     }
 
     static async create ({ input }) {

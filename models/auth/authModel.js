@@ -7,7 +7,7 @@ export class AuthModel {
            
             const users = await UserModel.getUserByEmail({ email })
             console.log(users);
-            if(!users) return 'User not found'
+            if(!users) throw new Error ('The user does not exist');
 
             try {
                 const user = users[0]
@@ -16,7 +16,7 @@ export class AuthModel {
                 }
                 
             } catch (error) {
-                return 'Password incorrect'
+                throw new Error('Invalid password');
             }
             
         }

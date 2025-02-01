@@ -11,7 +11,7 @@ POST http://localhost:8080/login HTTP/1.1
 content-type: application/json
 
 {
-  "email": "denijfjf@gmail.com",
+  "email": "denis@gmail.com",
   "password": "123456"
 }
 
@@ -22,9 +22,9 @@ POST http://localhost:8080/register HTTP/1.1
 content-type: application/json
 
 {
-  "username": "pepadasfe1dsadaad",
-  "email": "pepedsadada1@gmail.com",
-  "password": "123456761"
+  "username": "denis",
+  "email": "denis@gmail.com",
+  "password": "123456"
 }
 
 //HECHO

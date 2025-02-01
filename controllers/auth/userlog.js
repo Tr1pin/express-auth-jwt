@@ -26,7 +26,7 @@ export class UserAuthController {
                 secure: process.env.NODE_ENV === 'production',
                 sameSite: 'strict',
                 maxAge: 3600000,
-            }).send({ user, token }).status(200);
+            }).send({ user, token }).status(200)
         } catch (error) {
             res.status(400).send(error.message)
         }
@@ -37,18 +37,22 @@ export class UserAuthController {
             const result = validateUser(req.body)
         
             console.log(result);
-            if (!result.success) {
-            // 422 Unprocessable Entity
-              return res.status(400).json({ error: JSON.parse(result.error.message) })
+            try {
+                if (!result.success) {
+                    // 422 Unprocessable Entity
+                    return res.status(400).json({ error: JSON.parse(result.error.message) })
+                }
+          
+                const newUser = await UserModel.create({ input: result.data })
+                
+                if (!newUser) {
+                    // 422 Unprocessable Entity
+                    return res.status(400).json({ error: JSON.parse(result.error.message) })
+                }
+                res.status(201).json(newUser)   
+            } catch (error) {
+                res.status(400).send(error.message)
             }
-  
-            const newUser = await UserModel.create({ input: result.data })
-        
-            if (!newUser) {
-              // 422 Unprocessable Entity
-                return res.status(400).json({ error: JSON.parse(result.error.message) })
-              }
-            res.status(201).json(newUser)
     }
 
     logout = async (req, res) => {
@@ -57,6 +61,8 @@ export class UserAuthController {
     
     protected = (req, res) => {
         const { user } = req.session;
+        console.log("Protected")
+        console.log(user)
         if (!user) return res.status(403).send('Access not authorized')
         res.render('protected', user)
     }
